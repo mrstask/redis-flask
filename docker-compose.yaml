@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_APP=flask-compose.py
+    networks:
+      - curemedia
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./config/redis.conf:/redis.conf
+    command: [ "redis-server", "/redis.conf" ]
+    networks:
+      - curemedia
+
+networks:
+  curemedia:
+    name: curemedia
